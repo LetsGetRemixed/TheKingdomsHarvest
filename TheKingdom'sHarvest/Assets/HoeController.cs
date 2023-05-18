@@ -8,7 +8,7 @@ public class HoeController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetMouseButtonDown(0)) // Left mouse button
         {
             SwapTile();
         }
@@ -16,11 +16,22 @@ public class HoeController : MonoBehaviour
 
     private void SwapTile()
     {
-        Vector3Int tilePosition = groundTileset.WorldToCell(transform.position);
+        Vector3Int mousePosition = GetMouseTilePosition();
+        Vector3Int playerPosition = groundTileset.WorldToCell(transform.position);
 
-        if (groundTileset.GetTile(tilePosition) is TileBase groundTile && groundTile.name == "GroundOnly_0")
+        // Check if the tile is directly adjacent to the player
+        if (Vector3Int.Distance(mousePosition, playerPosition) <= 1f)
         {
-            groundTileset.SetTile(tilePosition, farmDirtTile);
+            if (groundTileset.GetTile(mousePosition) is TileBase groundTile && groundTile.name == "GroundOnly_0")
+            {
+                groundTileset.SetTile(mousePosition, farmDirtTile);
+            }
         }
+    }
+
+    private Vector3Int GetMouseTilePosition()
+    {
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return groundTileset.WorldToCell(mouseWorldPos);
     }
 }
