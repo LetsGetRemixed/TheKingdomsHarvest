@@ -47,6 +47,9 @@ TagManager:
   - name: Ground2
     uniqueID: 2133237609
     locked: 0
+  - name: Player Weapon
+    uniqueID: 2733317373
+    locked: 0
   - name: Player
     uniqueID: 3647353789
     locked: 0
